@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #define MAX_SIZE 100
 
 struct Stack {
@@ -9,7 +8,6 @@ struct Stack {
     unsigned capacity;
     char* array;
 };
-
 struct Stack* createStack(unsigned capacity) {
     struct Stack* stack = (struct Stack*)malloc(sizeof(struct Stack));
     if (!stack)
@@ -21,29 +19,23 @@ struct Stack* createStack(unsigned capacity) {
         return NULL;
     return stack;
 }
-
 int isEmpty(struct Stack* stack) {
     return stack->top == -1;
 }
-
 char peek(struct Stack* stack) {
     return stack->array[stack->top];
 }
-
 char pop(struct Stack* stack) {
     if (!isEmpty(stack))
         return stack->array[stack->top--];
     return '$';
 }
-
 void push(struct Stack* stack, char op) {
     stack->array[++stack->top] = op;
 }
-
 int isOperand(char ch) {
     return (ch >= 'a' && ch <= 'z') || (ch >= 'A' && ch <= 'Z');
 }
-
 int precedence(char ch) {
     switch (ch) {
         case '+':
@@ -57,13 +49,11 @@ int precedence(char ch) {
     }
     return -1;
 }
-
 void infixToPostfix(char* infix) {
     int i, k;
     struct Stack* stack = createStack(strlen(infix));
     if (!stack)
         return;
-
     for (i = 0, k = -1; infix[i]; ++i) {
         if (isOperand(infix[i]))
             infix[++k] = infix[i];
@@ -73,7 +63,7 @@ void infixToPostfix(char* infix) {
             while (!isEmpty(stack) && peek(stack) != '(')
                 infix[++k] = pop(stack);
             if (!isEmpty(stack) && peek(stack) != '(')
-                return; // Invalid expression
+                return;
             else
                 pop(stack);
         } else {
@@ -82,14 +72,11 @@ void infixToPostfix(char* infix) {
             push(stack, infix[i]);
         }
     }
-
     while (!isEmpty(stack))
-        infix[++k] = pop(stack;
-   
+        infix[++k] = pop(stack);
     infix[++k] = '\0';
     printf("Postfix Expression: %s\n", infix);
-}
-
+};
 int main() {
     char infix[MAX_SIZE];
     printf("Enter an infix expression: ");
