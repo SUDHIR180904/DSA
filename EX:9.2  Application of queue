@@ -1,0 +1,73 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct Node {
+    int data;
+    struct Node* next;
+};
+struct Queue {
+    struct Node* front;
+    struct Node* rear;
+};
+struct Queue* createQueue() {
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->front = queue->rear = NULL;
+    return queue;
+}
+int isEmpty(struct Queue* queue) {
+    return queue->front == NULL;
+}
+void enqueue(struct Queue* queue, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    if (isEmpty(queue)) {
+        queue->front = queue->rear = newNode;
+        return;
+    }
+    queue->rear->next = newNode;
+    queue->rear = newNode;
+}
+int dequeue(struct Queue* queue) {
+    if (isEmpty(queue)) {
+        printf("Queue is empty. Cannot dequeue.\n");
+        return -1;
+    }
+    int data = queue->front->data;
+    struct Node* temp = queue->front;
+    queue->front = queue->front->next;
+    if (queue->front == NULL) {
+        queue->rear = NULL;
+    }
+    free(temp);
+    return data;
+}
+void eliminate(int n, int k) {
+    struct Queue* queue = createQueue();
+    for (int i = 1; i <= n; i++) {
+        enqueue(queue, i);
+    }
+    int count = 0;
+    while (!isEmpty(queue)) {
+        int x = dequeue(queue);
+        count++;
+        if (count % k == 0) {
+            printf("%d ", x);
+        } else {
+            enqueue(queue, x);
+        }
+    }
+    free(queue);
+}
+int main() {
+    int n, k;
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+    printf("Enter the counting interval: ");
+    scanf("%d", &k);
+    if (n <= 0 || k <= 0) {
+        printf("Invalid input. Please enter positive values.\n");
+        return 1;
+    }
+    eliminate(n, k);
+return 0;
+}
