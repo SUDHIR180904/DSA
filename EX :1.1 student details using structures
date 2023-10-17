@@ -7,8 +7,7 @@ float cgpa;
 };
 int main()
 {
-struct student *ptr,std1;
-ptr=std1;
+struct student s;
 printf("Enter your rollno");
 scanf("%d",&s.rollno);
 printf("Enter your Name");
