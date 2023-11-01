@@ -1,5 +1,3 @@
-//C program to implement B Tree //
-
 #include<stdlib.h>
 #include<stdio.h>
 #define M 5
