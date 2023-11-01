@@ -3,24 +3,20 @@
 
 #define MAX 100
 
-// adjacency list node
 struct Node {
    int vertex;
    struct Node* next;
 };
 
-// adjacency list
 struct List {
    struct Node *head;
 };
 
-// graph structure
 struct Graph {
    int V;
    struct List *array;
 };
 
-// create a new adjacency list node
 struct Node* newNode(int vertex) {
    struct Node* new = (struct Node*) malloc(sizeof(struct Node));
    new->vertex = vertex;
